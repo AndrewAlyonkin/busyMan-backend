@@ -6,22 +6,22 @@ CREATE DEFINER ='root'@'localhost' TRIGGER 'task_AFTER_INSERT'
 BEGIN
     -- если вставляем новую таску с категорией, и она завершена, увеличиваем счетчик завершенных задач для категории
     if (ifnull(NEW.category_id, 0) > 0 && ifnull(NEW.completed, 0) = 1) then
-        update tasklist.category set completed_count = (ifnull(completed_count, 0) + 1) where id = NEW.category_id;
+        update tasklist.category set completed_count = (ifnull(completed_count, 0) + 1) where id = NEW.category_id and user_id = NEW.user_id;
     end if;
     -- если вставляем новую таску с категорией, и она не завершена, увеличиваем счетчик незавершенных задач для категории
     if (ifnull(NEW.category_id, 0) > 0 && ifnull(NEW.completed, 0) = 0) then
         update tasklist.category c
         set uncompleted_count = (ifnull(uncompleted_count, 0) + 1)
-        where id = NEW.category_id;
+        where id = NEW.category_id  and user_id = NEW.user_id;
     end if;
 
     -- подсчет общей статистики по задачам
     if ifnull(NEW.completed, 0) = 1 then
         -- ...если завершена, то увеличиваем общий счетчик завершенных задач
-        update tasklist.stat set completed_total = (ifnull(completed_total, 0) + 1) where id = 1;
+        update tasklist.stat set completed_total = (ifnull(completed_total, 0) + 1) where id = 1  and user_id = NEW.user_id;
     else
         -- ...а если не завершена - увеличиваем общий счетчик незавершенных задач
-        update tasklist.stat set uncompleted_total = (ifnull(uncompleted_total, 0) + 1) where id = 1;
+        update tasklist.stat set uncompleted_total = (ifnull(uncompleted_total, 0) + 1) where id = 1  and user_id = NEW.user_id;
     end if;
 END;
 
@@ -33,20 +33,20 @@ CREATE DEFINER ='root'@'localhost' TRIGGER 'task_AFTER_DELETE'
 BEGIN
     -- если задача имеет категорию  и она завершена, уменьшаем счетчик завершенных задач для категории
     if (ifnull(old.category_id, 0) > 0 && ifnull(old.completed, 0) = 1) then
-        update tasklist.category set completed_count = (ifnull(completed_count, 0) - 1) where id = old.category_id;
+        update tasklist.category set completed_count = (ifnull(completed_count, 0) - 1) where id = old.category_id  and user_id = old.user_id;
     end if;
     -- если задача имеет категорию, и она не завершена, уменьшаем счетчик невыполненных задач для категории
     if (ifnull(old.category_id, 0) > 0 && ifnull(old.completed, 0) = 0) then
-        update tasklist.category set uncompleted_count = (ifnull(uncompleted_count, 0) - 1) where id = old.category_id;
+        update tasklist.category set uncompleted_count = (ifnull(uncompleted_count, 0) - 1) where id = old.category_id  and user_id = old.user_id;
     end if;
 
     -- подсчет общей статистики по категориям
     if ifnull(old.completed, 0) = 1 then
         -- если завершена, то уменьшаем общий счетчик завершенных задач
-        update tasklist.stat set completed_total = (ifnull(completed_total, 0) - 1) where id = 1;
+        update tasklist.stat set completed_total = (ifnull(completed_total, 0) - 1) where id = 1  and user_id = old.user_id;
     else
         -- если не завершена, то уменьшаем общий счетчик незавершенных задач
-        update tasklist.stat set uncompleted_total = (ifnull(uncompleted_total, 0) - 1) where id = 1;
+        update tasklist.stat set uncompleted_total = (ifnull(uncompleted_total, 0) - 1) where id = 1  and user_id = old.user_id;
     end if;
 END;
 
@@ -64,12 +64,12 @@ BEGIN
         update tasklist.category
         set uncompleted_count = (ifnull(uncompleted_count, 0) - 1),
             completed_count   = (ifnull(completed_count, 0) + 1)
-        where id = old.category_id;
+        where id = old.category_id  and user_id = old.user_id;
         -- уменьшаем общий счетчик незавершенных задач на 1, увеличиваем общий счетчик завершенных задач на 1
         update tasklist.stat
         set uncompleted_total = (ifnull(uncompleted_total, 0) - 1),
             completed_total   = (ifnull(completed_total, 0) + 1)
-        where id = 1;
+        where id = 1  and user_id = old.user_id;
     END IF;
 
     -- статус задачи стал - не завершена и задача осталась в той же категории
@@ -79,12 +79,12 @@ BEGIN
         update tasklist.category
         set completed_count   = (ifnull(completed_count, 0) - 1),
             uncompleted_count = (ifnull(uncompleted_count, 0) + 1)
-        where id = old.category_id;
+        where id = old.category_id  and user_id = old.user_id;
         -- уменьшаем общий счетчик завершенных задач на 1, увеличиваем общий счетчик незавершенных задач на 1
         update tasklist.stat
         set completed_total   = (ifnull(completed_total, 0) - 1),
             uncompleted_total = (ifnull(uncompleted_total, 0) + 1)
-        where id = 1;
+        where id = 1  and user_id = old.user_id;
     END IF;
 
     -- изменили категорию выполненной задачи
