@@ -44,9 +44,7 @@ class CategoryRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void delete() {
         repository.delete(familyId, 1);
-        Assertions.assertThrows(NoSuchElementException.class, () ->
-                repository.findById(familyId).get());
-
+        Assertions.assertNull(repository.get(familyId, 1));
     }
 
     @Test

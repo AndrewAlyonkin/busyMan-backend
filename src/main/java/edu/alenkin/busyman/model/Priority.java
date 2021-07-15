@@ -32,4 +32,15 @@ public class Priority extends AbstractBaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
+
+    public Priority(Integer id, User user, String title, String color) {
+        super(id);
+        this.user = user;
+        this.title = title;
+        this.color = color;
+    }
+
+    public Priority(Priority priority) {
+        this(priority.getId(), priority.getUser(), priority.title, priority.getColor());
+    }
 }

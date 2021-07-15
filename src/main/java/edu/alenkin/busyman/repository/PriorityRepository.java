@@ -25,4 +25,7 @@ public interface PriorityRepository extends JpaRepository<Priority, Integer> {
 
     @Query("SELECT p FROM Priority p WHERE p.user.id=:userId")
     List<Priority> getAll(@Param("userId") int userId);
+
+    @Query("SELECT p FROM Priority p WHERE p.id=:id AND p.user.id=:userId")
+    Priority get(@Param("id") int idd, @Param("userId") int userId);
 }

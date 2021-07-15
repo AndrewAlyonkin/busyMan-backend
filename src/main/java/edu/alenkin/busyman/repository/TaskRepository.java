@@ -25,4 +25,7 @@ public interface TaskRepository extends JpaRepository<Task, IndexOutOfBoundsExce
 
     @Query("SELECT t FROM Task t WHERE t.user.id=:userId ORDER BY t.date DESC")
     List<Task> getAll(@Param("userId") int userId);
+
+    @Query("SELECT t FROM Task t WHERE t.id=:id AND t.user.id=:userId")
+    Task get(@Param("id") int id, @Param("userId") int userId);
 }
