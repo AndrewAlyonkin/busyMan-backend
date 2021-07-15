@@ -18,7 +18,7 @@ VALUES ('USER', 1),
 INSERT INTO  category (id, user_id, title, completed_count, uncompleted_count)
 VALUES (3, 1, 'Семья', 0, 0),
        (4, 1, 'Работа', 0, 0),
-       (5, 2, 'Отдых', NULL, 0),
+       (5, 2, 'Отдых', 0, 0),
        (6, 2, 'Путешествия', 0, 0);
 
 

@@ -84,4 +84,8 @@ public class User extends AbstractBaseEntity {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(),
                 u.getCompletedTotal(), u.getUncompletedTotal(), u.getRoles().toArray(new Role[0]));
     }
+
+    public User(Integer id) {
+        super(id);
+    }
 }

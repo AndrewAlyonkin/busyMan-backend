@@ -27,14 +27,26 @@ public class Category extends AbstractBaseEntity {
     private String title;
 
     @Column(name = "completed_count")
-    private long completedCount;
+    private int completedCount;
 
     @Column(name = "uncompleted_count")
-    private long uncompletedCount;
+    private int uncompletedCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
+
+    public Category(Integer id, User user, String title, int completedCount, int uncompletedCount) {
+        super(id);
+        this.user = user;
+        this.title = title;
+        this.completedCount = completedCount;
+        this.uncompletedCount = uncompletedCount;
+    }
+
+    public Category(Category category) {
+        this(category.getId(), category.getUser(), category.getTitle(), category.getCompletedCount(), category.getUncompletedCount());
+    }
 }
