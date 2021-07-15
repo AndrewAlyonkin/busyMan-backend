@@ -27,10 +27,10 @@ BEGIN
     -- подсчет общей статистики по задачам
     if ifnull(NEW.completed, 0) = 1 then
         -- ...если завершена, то увеличиваем общий счетчик завершенных задач
-        update users set completed_total = (ifnull(completed_total, 0) + 1) where user_id = NEW.user_id;
+        update users set completed_total = (ifnull(completed_total, 0) + 1) where id = NEW.user_id;
     else
         -- ...а если не завершена - увеличиваем общий счетчик незавершенных задач
-        update users set uncompleted_total = (ifnull(uncompleted_total, 0) + 1) where user_id = NEW.user_id;
+        update users set uncompleted_total = (ifnull(uncompleted_total, 0) + 1) where id = NEW.user_id;
     end if;
 END $$
 
@@ -60,10 +60,10 @@ BEGIN
     -- подсчет общей статистики по категориям
     if ifnull(OLD.completed, 0) = 1 then
         -- если завершена, то уменьшаем общий счетчик завершенных задач
-        update users set completed_total = (ifnull(completed_total, 0) - 1) where user_id = OLD.user_id;
+        update users set completed_total = (ifnull(completed_total, 0) - 1) where id = OLD.user_id;
     else
         -- если не завершена, то уменьшаем общий счетчик незавершенных задач
-        update users set uncompleted_total = (ifnull(uncompleted_total, 0) - 1) where user_id = OLD.user_id;
+        update users set uncompleted_total = (ifnull(uncompleted_total, 0) - 1) where id = OLD.user_id;
     end if;
 END $$
 
@@ -88,7 +88,7 @@ BEGIN
         update users
         set uncompleted_total = (ifnull(uncompleted_total, 0) - 1),
             completed_total   = (ifnull(completed_total, 0) + 1)
-        where user_id = OLD.user_id;
+        where id = OLD.user_id;
     END IF;
 
     -- статус задачи стал - не завершена и задача осталась в той же категории
@@ -104,7 +104,7 @@ BEGIN
         update users
         set completed_total   = (ifnull(completed_total, 0) - 1),
             uncompleted_total = (ifnull(uncompleted_total, 0) + 1)
-        where user_id = OLD.user_id;
+        where id = OLD.user_id;
     END IF;
 
     -- изменили категорию выполненной задачи
@@ -154,7 +154,7 @@ BEGIN
         update users
         set uncompleted_total = (ifnull(uncompleted_total, 0) + 1),
             completed_total   = (ifnull(completed_total, 0) - 1)
-        where user_id = OLD.user_id;
+        where id = OLD.user_id;
     END IF;
 
     -- изменили категорию и статус задачи с невыполненной на выполненную
@@ -174,7 +174,7 @@ BEGIN
         update users
         set uncompleted_total = (ifnull(uncompleted_total, 0) - 1),
             completed_total   = (ifnull(completed_total, 0) + 1)
-        where user_id = OLD.user_id;
+        where id = OLD.user_id;
     END IF;
 END $$
 

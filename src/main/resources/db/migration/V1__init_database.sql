@@ -49,6 +49,7 @@ CREATE TABLE category
 CREATE TABLE priority
 (
     id    bigint      NOT NULL AUTO_INCREMENT,
+    user_id           bigint      NOT NULL,
     title varchar(45) NOT NULL,
     color varchar(45) NOT NULL,
     PRIMARY KEY (id),
@@ -61,7 +62,7 @@ CREATE TABLE task
     user_id     bigint       NOT NULL,
     title       varchar(100) NOT NULL,
     completed   int      DEFAULT 0,
-    date        datetime DEFAULT NULL,
+    date        timestamp DEFAULT NULL,
     priority_id bigint   DEFAULT NULL,
     category_id bigint   DEFAULT NULL,
     PRIMARY KEY (id),
