@@ -28,30 +28,35 @@ public class CategoryRestController {
     @GetMapping
     public ResponseEntity<List<Category>> getAll() {
         Integer userId = SecurityUtils.getAuthUserId();
+        log.debug("Get all categories for user {}", userId);
         return ResponseEntity.ok(service.getAll(userId));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> get(@PathVariable Integer id) {
         Integer userId = SecurityUtils.getAuthUserId();
+        log.debug("Get category {} for user {}", id, userId);
         return ResponseEntity.ok(service.get(id, userId));
     }
 
     @PostMapping
     public ResponseEntity<Category> create(@RequestBody Category category) {
         Integer userId = SecurityUtils.getAuthUserId();
+        log.debug("Creating category {} for user {}", category, userId);
         return buildResponse(category, service.create(category, userId));
     }
 
     @PutMapping
     public ResponseEntity<Category> update(@RequestBody Category category) {
         Integer userId = SecurityUtils.getAuthUserId();
+        log.debug("Updating category {} for user {}", category, userId);
         return buildResponse(category, service.create(category, userId));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
         Integer userId = SecurityUtils.getAuthUserId();
+        log.debug("Deleting category {} for user {}", id, userId);
         service.delete(id, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
