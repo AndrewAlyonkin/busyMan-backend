@@ -13,9 +13,9 @@ public interface PriorityService {
 
     List<Priority> getAll(Integer userId);
 
-    void delete(Integer id, Integer userID);
+    void delete(Integer id, Integer userId);
 
-    Priority create(Priority priority);
+    Priority create(Priority priority, Integer userId);
 
-    Priority update(Priority priority);
+    Priority update(Priority priority, Integer userId);
 }

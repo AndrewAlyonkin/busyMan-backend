@@ -11,6 +11,8 @@ import java.util.List;
 public interface UserService {
     User get(Integer id);
 
+    User getByEmail(String email);
+
     List<User> getAll();
 
     void delete(Integer id);

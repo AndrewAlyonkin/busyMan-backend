@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
-import static edu.alenkin.busyman.util.ValidationUtils.assureIdConsistent;
 import static edu.alenkin.busyman.util.ValidationUtils.checkNotFoundWithId;
 
 /**
@@ -38,23 +37,21 @@ public class JpaCategoryService implements CategoryService {
     public void delete(Integer id, Integer userId) {
         log.debug("Delete category with id {} for user id = {} ", id, userId);
         checkNotFoundWithId(repository.delete(id, userId) != 0, (int) id);
-
     }
 
     @Override
     public Category create(Category category, Integer userId) {
         log.debug("Create category {} ", category);
         Assert.notNull(category, "category can not be empty");
-        if (!category.isNew() || category.getId() != userId) {
+        if (!category.isNew()) {
             return null;
         }
-        return repository.save(category);
+        return repository.save(category, userId);
     }
 
     @Override
     public Category update(Category category, Integer userId) {
         log.debug("Update priority {} ", category);
-        assureIdConsistent(category, userId);
-        return repository.save(category);
+        return repository.save(category, userId);
     }
 }
