@@ -39,13 +39,13 @@ public class UserRestController {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         log.debug("Create user {}", user);
-        return buildResponse(user, service.create(user));
+        return buildResponse(user, service.create(user), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<User> update(@RequestBody User user) {
         log.debug("Update user {}", user);
-        return buildResponse(user, service.update(user));
+        return buildResponse(user, service.update(user), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

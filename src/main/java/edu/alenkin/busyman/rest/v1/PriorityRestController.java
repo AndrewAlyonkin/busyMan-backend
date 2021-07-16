@@ -44,14 +44,14 @@ public class PriorityRestController {
     public ResponseEntity<Priority> create(@RequestBody Priority priority) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Creating priority {} for user {}", priority, userId);
-        return buildResponse(priority, service.create(priority, userId));
+        return buildResponse(priority, service.create(priority, userId), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Priority> update(@RequestBody Priority priority) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating priority {} for user {}", priority, userId);
-        return buildResponse(priority, service.create(priority, userId));
+        return buildResponse(priority, service.create(priority, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

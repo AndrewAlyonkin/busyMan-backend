@@ -43,14 +43,14 @@ public class CategoryRestController {
     public ResponseEntity<Category> create(@RequestBody Category category) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Creating category {} for user {}", category, userId);
-        return buildResponse(category, service.create(category, userId));
+        return buildResponse(category, service.create(category, userId), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Category> update(@RequestBody Category category) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating category {} for user {}", category, userId);
-        return buildResponse(category, service.create(category, userId));
+        return buildResponse(category, service.create(category, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

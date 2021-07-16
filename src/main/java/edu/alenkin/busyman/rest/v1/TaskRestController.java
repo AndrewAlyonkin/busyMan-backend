@@ -57,14 +57,14 @@ public class TaskRestController {
     public ResponseEntity<Task> create(@RequestBody Task task) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Creating task {} for user {}", task, userId);
-        return buildResponse(task, service.create(task, userId));
+        return buildResponse(task, service.create(task, userId), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Task> update(@RequestBody Task task) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating task {} for user {}", task, userId);
-        return buildResponse(task, service.create(task, userId));
+        return buildResponse(task, service.create(task, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

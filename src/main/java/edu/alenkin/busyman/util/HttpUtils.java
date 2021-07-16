@@ -9,19 +9,19 @@ import org.springframework.http.ResponseEntity;
  */
 public class HttpUtils {
     private HttpUtils(){}
-    public static <T> ResponseEntity<T> buildResponse(Object methodParameter, T entity) {
+    public static <T> ResponseEntity<T> buildResponse(Object methodParameter, T entity, HttpStatus status) {
         if (methodParameter == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return entity == null
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(entity, HttpStatus.OK);
+                : new ResponseEntity<>(entity, status);
     }
 
-    public static <T> ResponseEntity<T> buildResponse(T entity, boolean condition) {
+    public static <T> ResponseEntity<T> buildResponse(T entity, boolean condition, HttpStatus status) {
         return (entity!=null && condition)
-                ? new ResponseEntity<>(entity, HttpStatus.OK)
+                ? new ResponseEntity<>(entity, status)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
