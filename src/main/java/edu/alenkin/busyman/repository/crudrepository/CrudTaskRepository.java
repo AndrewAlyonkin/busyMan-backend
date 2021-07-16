@@ -26,6 +26,12 @@ public interface CrudTaskRepository extends JpaRepository<Task, IndexOutOfBounds
     @Query("SELECT t FROM Task t WHERE t.user.id=:userId ORDER BY t.date DESC")
     List<Task> getAll(@Param("userId") int userId);
 
+    @Query("SELECT t FROM Task t WHERE t.user.id=:userId AND t.priority.id=:priorityId ORDER BY t.date DESC")
+    List<Task> getWithPriority(@Param("priorityId") int priorityId, @Param("userId") int userId);
+
+    @Query("SELECT t FROM Task t WHERE t.user.id=:userId AND t.category.id=:categoryId ORDER BY t.date DESC")
+    List<Task> getWithCategory(@Param("categoryId") int categoryId, @Param("userId") int userId);
+
     @Query("SELECT t FROM Task t WHERE t.id=:id AND t.user.id=:userId")
     Task get(@Param("id") int id, @Param("userId") int userId);
 }

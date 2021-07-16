@@ -35,4 +35,14 @@ public class JpaTaskRepository implements TaskRepository{
         task.setUser(userRepository.getById(userId));
         return jpaRepository.save(task);
     }
+
+    @Override
+    public List<Task> getWithPriority(int priorityId, int userId) {
+        return jpaRepository.getWithPriority(priorityId, userId);
+    }
+
+    @Override
+    public List<Task> getWithCategory(int categoryId, int userId) {
+        return jpaRepository.getWithCategory(categoryId, userId);
+    }
 }

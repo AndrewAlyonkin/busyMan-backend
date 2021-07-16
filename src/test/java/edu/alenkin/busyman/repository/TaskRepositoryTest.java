@@ -52,6 +52,28 @@ class TaskRepositoryTest extends AbstractRepositoryTest {
     }
 
     @Test
+    public void getWithPriority() {
+        assertThat(List.of(taskOne13, taskOne11))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .isEqualTo(repository.getWithPriority(7, 1));
+    }
+
+    @Test
+    public void getWithCategory() {
+        assertThat(List.of(taskOne14, taskOne13))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .isEqualTo(repository.getWithCategory(4, 1));
+    }
+
+    @Test
     public void delete() {
         repository.delete(taskOne11id, 1);
         Assertions.assertNull(repository.get(taskOne11id, 1));

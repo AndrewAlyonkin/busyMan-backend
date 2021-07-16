@@ -34,6 +34,18 @@ public class JpaTaskService implements TaskService {
     }
 
     @Override
+    public List<Task> getWithPriority(Integer priorityId, Integer userId) {
+        log.debug("Get all tasks with priority {} for user id = {} ",priorityId, userId);
+        return repository.getWithPriority(priorityId, userId);
+    }
+
+    @Override
+    public List<Task> getWithCategory(Integer categoryId, Integer userId) {
+        log.debug("Get all tasks with category {} for user id = {} ",categoryId, userId);
+        return repository.getWithCategory(categoryId, userId);
+    }
+
+    @Override
     public void delete(Integer id, Integer userId) {
         log.debug("Delete category with id {} for user id = {} ", id, userId);
         checkNotFoundWithId(repository.delete(id, userId) != 0, (int) id);

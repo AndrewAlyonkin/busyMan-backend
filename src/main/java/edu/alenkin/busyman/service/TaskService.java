@@ -13,6 +13,10 @@ public interface TaskService {
 
     List<Task> getAll(Integer userId);
 
+    List<Task> getWithPriority(Integer priorityId, Integer userId);
+
+    List<Task> getWithCategory(Integer categoryId, Integer userId);
+
     void delete(Integer id, Integer userId);
 
     Task create(Task task, Integer userId);

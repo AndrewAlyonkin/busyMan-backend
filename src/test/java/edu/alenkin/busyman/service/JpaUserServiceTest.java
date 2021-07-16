@@ -30,7 +30,6 @@ class JpaUserServiceTest extends AbstractServiceTest {
     @Autowired
     private JpaUserService service;
 
-
     private ArgumentCaptor<Integer> idCaptor;
     private ArgumentCaptor<Integer> userIdCaptor;
     private ArgumentCaptor<User> userCaptor;
@@ -42,7 +41,6 @@ class JpaUserServiceTest extends AbstractServiceTest {
         userIdCaptor = ArgumentCaptor.forClass(Integer.class);
         userCaptor = ArgumentCaptor.forClass(User.class);
     }
-
 
     @Test
     public void get() {

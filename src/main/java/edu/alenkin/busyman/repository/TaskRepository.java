@@ -16,4 +16,8 @@ public interface TaskRepository {
     Task get(int id, int userId);
 
     Task save(Task task, int userId);
+
+    List<Task> getWithPriority(int priorityId, int userId);
+
+    List<Task> getWithCategory(int categoryId, int userId);
 }

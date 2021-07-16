@@ -68,6 +68,22 @@ class JpaTaskServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void getWithPriority() {
+        List<Task> all = List.of(taskOne13, taskOne11);
+        Mockito.when(repository.getWithPriority(1, 1)).thenReturn(all);
+        List<Task> received = service.getWithPriority(1, 1);
+        assertThat(all).isEqualTo(received);
+    }
+
+    @Test
+    public void getWithCategory() {
+        List<Task> all = List.of(taskOne14, taskOne13);
+        Mockito.when(repository.getWithCategory(1, 1)).thenReturn(all);
+        List<Task> received = service.getWithCategory(1, 1);
+        assertThat(all).isEqualTo(received);
+    }
+
+    @Test
     public void delete() {
         Mockito.when(repository.delete(taskOne11id, 1)).thenReturn(1);
         service.delete(taskOne11id, 1);
