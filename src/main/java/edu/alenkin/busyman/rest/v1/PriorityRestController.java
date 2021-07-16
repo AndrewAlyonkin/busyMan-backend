@@ -26,12 +26,12 @@ public class PriorityRestController {
     static final String URL = "/api/v1/priorities";
     private final PriorityService service;
 
+    @GetMapping
     public ResponseEntity<List<Priority>> getAll() {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Get all priorities for user {}", userId);
         return ResponseEntity.ok(service.getAll(userId));
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<Priority> get(@PathVariable Integer id) {
