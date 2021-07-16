@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private TaskRepository repository;
+    private JpaTaskRepository repository;
 
     @Test
     public void get() {
@@ -66,12 +66,12 @@ class TaskRepositoryTest extends AbstractRepositoryTest {
                 .ignoringFieldsMatchingRegexes(".*user")
                 .ignoringFieldsMatchingRegexes(".*completedCount")
                 .ignoringActualNullFields()
-                .isEqualTo(repository.save(updated));
+                .isEqualTo(repository.save(updated, 1));
     }
 
     @Test
     public void save() {
-        Task saved = repository.save(getNewTask());
+        Task saved = repository.save(getNewTask(), 1);
         Task expected = getNewTask();
         expected.setId(saved.getId());
         assertThat(expected)

@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PriorityRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private PriorityRepository repository;
+    private JpaPriorityRepository repository;
 
     @Test
     public void get() {
@@ -52,12 +52,12 @@ class PriorityRepositoryTest extends AbstractRepositoryTest {
         assertThat(getUpdated())
                 .usingRecursiveComparison()
                 .ignoringFields("user")
-                .isEqualTo(repository.save(updated));
+                .isEqualTo(repository.save(updated,1));
     }
 
     @Test
     public void save() {
-        Priority saved = repository.save(getNew());
+        Priority saved = repository.save(getNew(),1);
         Priority expected = getNew();
         expected.setId(saved.getId());
         assertThat(expected)

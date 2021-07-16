@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class CategoryRepositoryTest extends AbstractRepositoryTest {
     @Autowired
-    private CategoryRepository repository;
+    private JpaCategoryRepository repository;
 
     @Test
     public void get() {
@@ -52,12 +52,12 @@ class CategoryRepositoryTest extends AbstractRepositoryTest {
         assertThat(getUpdatedCategory())
                 .usingRecursiveComparison()
                 .ignoringFields("user")
-                .isEqualTo(repository.save(updated));
+                .isEqualTo(repository.save(updated, 1));
     }
 
     @Test
     public void save() {
-        Category saved = repository.save(getNewCategory());
+        Category saved = repository.save(getNewCategory(),1);
         Category expected = getNewCategory();
         expected.setId(saved.getId());
         assertThat(expected)
