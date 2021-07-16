@@ -46,6 +46,10 @@ public class Category extends AbstractBaseEntity {
         this.uncompletedCount = uncompletedCount;
     }
 
+    public Category(Integer id) {
+        super(id);
+    }
+
     public Category(Category category) {
         this(category.getId(), category.getUser(), category.getTitle(), category.getCompletedCount(), category.getUncompletedCount());
     }

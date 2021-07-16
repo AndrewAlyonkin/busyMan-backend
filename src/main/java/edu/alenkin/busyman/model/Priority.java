@@ -43,4 +43,8 @@ public class Priority extends AbstractBaseEntity {
     public Priority(Priority priority) {
         this(priority.getId(), priority.getUser(), priority.title, priority.getColor());
     }
+
+    public Priority(Integer id) {
+        super(id);
+    }
 }
