@@ -52,6 +52,6 @@ public class JpaTaskService implements TaskService {
     @Override
     public Task update(Task task, Integer userId) {
         log.debug("Update priority {} ", task);
-        return repository.save(task, userId);
+        return checkNotFoundWithId(repository.save(task, userId), userId);
     }
 }
