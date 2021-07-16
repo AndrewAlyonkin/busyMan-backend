@@ -13,6 +13,6 @@ public interface CategoryService {
     Category get(Integer id, Integer userId);
     List<Category> getAll(Integer userId);
     void delete(Integer id, Integer userId);
-    Priority create(Priority priority);
-    Priority update(Priority priority);
+    Category create(Category priority, Integer userId);
+    Category update(Category priority, Integer userId);
 }
