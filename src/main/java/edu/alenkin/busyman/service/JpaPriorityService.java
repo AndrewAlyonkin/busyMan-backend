@@ -52,6 +52,6 @@ public class JpaPriorityService implements PriorityService {
     @Override
     public Priority update(Priority priority, Integer userId) {
         log.debug("Update priority {} ", priority);
-        return repository.save(priority, userId);
+        return checkNotFoundWithId(repository.save(priority, userId), userId);
     }
 }
