@@ -52,6 +52,6 @@ public class JpaCategoryService implements CategoryService {
     @Override
     public Category update(Category category, Integer userId) {
         log.debug("Update priority {} ", category);
-        return repository.save(category, userId);
+        return checkNotFoundWithId(repository.save(category, userId), userId);
     }
 }
