@@ -1,4 +1,4 @@
-package edu.alenkin.busyman.repository;
+package edu.alenkin.busyman.repository.crudrepository;
 
 import edu.alenkin.busyman.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM User u WHERE u.id=:id")

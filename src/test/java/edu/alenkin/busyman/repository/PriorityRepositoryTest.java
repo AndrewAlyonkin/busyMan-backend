@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PriorityRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private JpaPriorityRepository repository;
+    private PriorityRepository repository;
 
     @Test
     public void get() {

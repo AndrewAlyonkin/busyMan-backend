@@ -1,6 +1,8 @@
 package edu.alenkin.busyman.repository;
 
 import edu.alenkin.busyman.model.Task;
+import edu.alenkin.busyman.repository.crudrepository.CrudTaskRepository;
+import edu.alenkin.busyman.repository.crudrepository.CrudUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +14,9 @@ import java.util.List;
  */
 @Repository
 @AllArgsConstructor
-public class JpaTaskRepository {
-    private final TaskRepository jpaRepository;
-    private final UserRepository userRepository;
+public class JpaTaskRepository implements TaskRepository{
+    private final CrudTaskRepository jpaRepository;
+    private final CrudUserRepository userRepository;
 
 
     public int delete(int id, int userId) {

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private JpaTaskRepository repository;
+    private TaskRepository repository;
 
     @Test
     public void get() {

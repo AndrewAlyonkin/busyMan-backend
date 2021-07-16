@@ -1,6 +1,8 @@
 package edu.alenkin.busyman.repository;
 
 import edu.alenkin.busyman.model.Priority;
+import edu.alenkin.busyman.repository.crudrepository.CrudPriorityRepository;
+import edu.alenkin.busyman.repository.crudrepository.CrudUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +14,9 @@ import java.util.List;
  */
 @Repository
 @AllArgsConstructor
-public class JpaPriorityRepository {
-    private final PriorityRepository jpaRepository;
-    private final UserRepository userRepository;
+public class JpaPriorityRepository implements PriorityRepository {
+    private final CrudPriorityRepository jpaRepository;
+    private final CrudUserRepository userRepository;
 
     public int delete(int id, int userId) {
         return jpaRepository.delete(id, userId);

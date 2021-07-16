@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class CategoryRepositoryTest extends AbstractRepositoryTest {
     @Autowired
-    private JpaCategoryRepository repository;
+    private CategoryRepository repository;
 
     @Test
     public void get() {

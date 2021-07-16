@@ -1,6 +1,7 @@
 package edu.alenkin.busyman.repository;
 
 import edu.alenkin.busyman.model.User;
+import edu.alenkin.busyman.repository.crudrepository.CrudUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private UserRepository repository;
+    private CrudUserRepository repository;
 
     @Test
     public void get() {
