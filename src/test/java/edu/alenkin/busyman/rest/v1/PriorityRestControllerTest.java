@@ -7,5 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * oxqq@ya.ru
  */
 class PriorityRestControllerTest {
+    static final String URL = "/api/categories";
 
 }
