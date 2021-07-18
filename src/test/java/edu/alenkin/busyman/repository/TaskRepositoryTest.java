@@ -93,7 +93,7 @@ class TaskRepositoryTest extends AbstractRepositoryTest {
                 .ignoringFieldsMatchingRegexes(".*completedCount")
                 .ignoringActualNullFields()
                 .ignoringCollectionOrder()
-                .isEqualTo(repository.findByParameter("Купить", null, null, null, 1, PageRequest.of(0, 10)).toList());
+                .isEqualTo(repository.findByParameter("Buy", null, null, null, 1, PageRequest.of(0, 10)).toList());
     }
 
     @Test

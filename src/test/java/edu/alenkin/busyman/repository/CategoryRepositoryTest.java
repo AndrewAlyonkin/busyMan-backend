@@ -48,7 +48,7 @@ class CategoryRepositoryTest extends AbstractRepositoryTest {
         assertThat(List.of(family))
                 .usingRecursiveComparison()
                 .ignoringFields("user")
-                .isEqualTo(repository.findByParameter("сем",1, PageRequest.of(0, 10)).toList());
+                .isEqualTo(repository.findByParameter("mil",1, PageRequest.of(0, 10)).toList());
         assertThat(List.of(chill, travel))
                 .usingRecursiveComparison()
                 .ignoringFields("user")

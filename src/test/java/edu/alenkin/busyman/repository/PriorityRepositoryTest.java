@@ -49,7 +49,7 @@ class PriorityRepositoryTest extends AbstractRepositoryTest {
         assertThat(List.of(low))
                 .usingRecursiveComparison()
                 .ignoringFields("user")
-                .isEqualTo(repository.findByParameter("низ", 1, PageRequest.of(0, 10)).toList());
+                .isEqualTo(repository.findByParameter("low", 1, PageRequest.of(0, 10)).toList());
 
         assertThat(List.of(low, middle))
                 .usingRecursiveComparison()

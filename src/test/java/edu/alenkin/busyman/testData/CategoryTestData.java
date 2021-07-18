@@ -23,10 +23,10 @@ public class CategoryTestData {
     public final static int workId = 4;
     public final static int chillId = 5;
     public final static int travelId = 6;
-    public static Category family = new Category(familyId, new User(1), "Семья", 1, 0);
-    public static Category work = new Category(workId, new User(1), "Работа", 0, 2);
-    public static Category chill = new Category(chillId, new User(2), "Отдых", 0, 1);
-    public static Category travel = new Category(travelId, new User(2), "Путешествия", 0, 1);
+    public static Category family = new Category(familyId, new User(1), "Family", 1, 0);
+    public static Category work = new Category(workId, new User(1), "Work", 0, 2);
+    public static Category chill = new Category(chillId, new User(2), "Chill", 0, 1);
+    public static Category travel = new Category(travelId, new User(2), "Travel", 0, 1);
 
     public static Category getNewCategory() {
         return new Category(null, new User(1), "New", 0, 0);

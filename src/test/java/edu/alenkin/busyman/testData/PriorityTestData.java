@@ -25,13 +25,13 @@ public class PriorityTestData {
     public final static int midId = 8;
     public final static int higId = 9;
     public final static int supHigId = 10;
-    public final static Priority low = new Priority(lowId, new User(1), "Низкий", "#caffdd");
-    public final static Priority middle = new Priority(midId, new User(1), "Средний", "#883bdc");
-    public final static Priority high = new Priority(higId, new User(2), "Высокий", "#f05f5f");
-    public final static Priority superHigh = new Priority(supHigId, new User(2), "Очень Высокий", "#f05f5f");
+    public final static Priority low = new Priority(lowId, new User(1), "Low", "#caffdd");
+    public final static Priority middle = new Priority(midId, new User(1), "Middle", "#883bdc");
+    public final static Priority high = new Priority(higId, new User(2), "High", "#f05f5f");
+    public final static Priority superHigh = new Priority(supHigId, new User(2), "Very high", "#f05f5f");
 
     public static Priority getNew() {
-        return new Priority(null, new User(1), "Низкий", "#caffdd");
+        return new Priority(null, new User(1), "Low", "#caffdd");
     }
 
     public static Priority getUpdated() {
