@@ -1,12 +1,22 @@
 package edu.alenkin.busyman.testData;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.alenkin.busyman.model.Category;
 import edu.alenkin.busyman.model.Priority;
 import edu.alenkin.busyman.model.Task;
 import edu.alenkin.busyman.model.User;
+import edu.alenkin.busyman.util.JsonUtil;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Alenkin Andrew
@@ -41,5 +51,43 @@ public class TaskTestData {
         updated.setTitle("Updated");
         updated.setDate(LocalDateTime.parse("2015-04-27T15:27:34"));
         return updated;
+    }
+
+
+    public static ResultMatcher jsonMatcher(Task expected, BiConsumer<Task, Task> equalsAssertion) {
+        return mvcResult -> equalsAssertion.accept(asCategory(mvcResult), expected);
+    }
+
+    public static ResultMatcher jsonMatcher(List<Task> expected, BiConsumer<List<Task>, List<Task>> equalsAssertion) {
+        return mvcResult -> equalsAssertion.accept(asCategories(mvcResult), expected);
+    }
+
+    public static Task asCategory(MvcResult mvcResult) throws UnsupportedEncodingException, JsonProcessingException {
+        String jsonActual = mvcResult.getResponse().getContentAsString();
+        return JsonUtil.readValue(jsonActual, Task.class);
+    }
+
+    public static List<Task> asCategories(MvcResult mvcResult) throws IOException {
+        String jsonActual = mvcResult.getResponse().getContentAsString();
+        return JsonUtil.readValues(jsonActual, Task.class);
+    }
+
+    public static void assertNoIdEquals(Task actual, Task expected) {
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .isEqualTo(expected);
+    }
+    public static void assertNoIdEquals(List<Task> actual, List<Task> expected) {
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .isEqualTo(expected);
     }
 }

@@ -12,6 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -65,6 +68,15 @@ class JpaTaskServiceTest extends AbstractServiceTest {
         assertThat(all).isEqualTo(received);
         Mockito.verify(repository).getAll(userIdCaptor.capture());
         assertThat(1).isEqualTo(userIdCaptor.getValue());
+    }
+
+    @Test
+    public void find() {
+        List<Task> all = List.of(taskOne11, taskOne12, taskOne13);
+        Page<Task> page = new PageImpl<>(all);
+        Mockito.when(repository.findByParameter(Mockito.any(), Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt(), Mockito.any())).thenReturn(page);
+        Page<Task> received = service.findByParameter("", 1, 4, 2, 1, PageRequest.of(0, 10));
+        assertThat(page).isEqualTo(received);
     }
 
     @Test

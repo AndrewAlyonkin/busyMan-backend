@@ -1,5 +1,6 @@
 package edu.alenkin.busyman.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
@@ -22,6 +23,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     protected Integer id;
 
     @Override
+    @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }

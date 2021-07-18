@@ -11,9 +11,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class PrioritySearch extends AbstractSearch {
     private String title;
 
+    public PrioritySearch(Integer pageNumber, Integer pageSize, String sortColumn, String sortDirection, String title) {
+        super(pageNumber, pageSize, sortColumn, sortDirection);
+        this.title = title;
+    }
 }

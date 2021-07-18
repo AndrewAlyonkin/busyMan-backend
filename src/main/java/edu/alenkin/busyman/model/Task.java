@@ -1,5 +1,9 @@
 package edu.alenkin.busyman.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.alenkin.busyman.util.LocalDateTimeDeserializer;
+import edu.alenkin.busyman.util.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +40,8 @@ public class Task extends AbstractBaseEntity {
 
     @Column(name = "date", nullable = false)
     @NotNull
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)

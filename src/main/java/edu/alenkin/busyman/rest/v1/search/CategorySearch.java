@@ -15,4 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategorySearch extends AbstractSearch {
     private String title;
+
+    public CategorySearch(Integer pageNumber, Integer pageSize, String sortColumn, String sortDirection, String title) {
+        super(pageNumber, pageSize, sortColumn, sortDirection);
+        this.title = title;
+    }
 }

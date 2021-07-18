@@ -13,9 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-import static edu.alenkin.busyman.util.HttpUtils.*;
+import static edu.alenkin.busyman.util.HttpUtils.buildResponse;
+import static edu.alenkin.busyman.util.HttpUtils.getSort;
 
 /**
  * @author Alenkin Andrew
@@ -37,14 +40,15 @@ public class CategoryRestController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<Page<Category>> find(@RequestBody CategorySearch search) {
+    public ResponseEntity<List<Category>> find(@RequestBody CategorySearch search) {
         int userId = SecurityUtils.getAuthUserId();
-        log.debug("Search categories with title={} for user {}",search, userId);
+        log.debug("Search categories with title={} for user {}", search, userId);
 
         Sort sort = getSort(search);
-        PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize(), sort);
+        PageRequest pageRequest = PageRequest.of(Objects.requireNonNullElse(search.getPageNumber(), 0),
+                Objects.requireNonNullElse(search.getPageSize(), 20), sort);
 
-        return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest));
+        return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest).toList());
     }
 
     @GetMapping("/{id}")
@@ -65,7 +69,7 @@ public class CategoryRestController {
     public ResponseEntity<Category> update(@RequestBody Category category) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating category {} for user {}", category, userId);
-        return buildResponse(category, service.create(category, userId), HttpStatus.CREATED);
+        return buildResponse(category, service.update(category, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

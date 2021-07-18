@@ -37,14 +37,14 @@ public class PriorityRestController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<Page<Priority>> find(@RequestBody PrioritySearch search) {
+    public ResponseEntity<List<Priority>> find(@RequestBody PrioritySearch search) {
         int userId = SecurityUtils.getAuthUserId();
         log.debug("Search priorities with title={} for user {}",search, userId);
 
         Sort sort = getSort(search);
         PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize(), sort);
 
-        return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest));
+        return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest).toList());
     }
 
     @GetMapping("/{id}")
@@ -65,7 +65,7 @@ public class PriorityRestController {
     public ResponseEntity<Priority> update(@RequestBody Priority priority) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating priority {} for user {}", priority, userId);
-        return buildResponse(priority, service.create(priority, userId), HttpStatus.CREATED);
+        return buildResponse(priority, service.update(priority, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

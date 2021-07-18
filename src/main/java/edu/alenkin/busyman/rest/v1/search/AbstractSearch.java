@@ -12,10 +12,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class AbstractSearch {
     private Integer pageNumber;
     private Integer pageSize;
     private String sortColumn;
     private String sortDirection;
+
+    public AbstractSearch(Integer pageNumber, Integer pageSize, String sortColumn, String sortDirection) {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+        this.sortColumn = sortColumn;
+        this.sortDirection = sortDirection;
+    }
 }

@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
  * oxqq@ya.ru
  */
 public class HttpUtils {
-    private HttpUtils(){}
+    private HttpUtils() {
+    }
+
     public static <T> ResponseEntity<T> buildResponse(Object methodParameter, T entity, HttpStatus status) {
         if (methodParameter == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -22,15 +24,20 @@ public class HttpUtils {
     }
 
     public static <T> ResponseEntity<T> buildResponse(T entity, boolean condition, HttpStatus status) {
-        return (entity!=null && condition)
+        return (entity != null && condition)
                 ? new ResponseEntity<>(entity, status)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public static Sort getSort(AbstractSearch search) {
         String sortColumn = search.getSortColumn() == null ? "title" : search.getSortColumn();
-        Sort.Direction direction = search.getSortDirection().contains("desc")
-                ? Sort.Direction.DESC : Sort.Direction.ASC;
+        String sortDirection = search.getSortDirection();
+
+        Sort.Direction direction = (sortDirection != null && sortDirection.contains("desc"))
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
         return Sort.by(direction, sortColumn);
+
+
     }
 }

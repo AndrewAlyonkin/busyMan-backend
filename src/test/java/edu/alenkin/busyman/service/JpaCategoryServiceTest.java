@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -65,6 +67,15 @@ class JpaCategoryServiceTest extends AbstractServiceTest {
         assertThat(all).isEqualTo(received);
         Mockito.verify(repository).getAll(userIdCaptor.capture());
         assertThat(1).isEqualTo(userIdCaptor.getValue());
+    }
+
+    @Test
+    public void findByTitle() {
+        List<Category> all = List.of(family, work, chill);
+        Page<Category> page = new PageImpl<>(all);
+        Mockito.when(repository.findByParameter(Mockito.any(), Mockito.anyInt(), Mockito.any())).thenReturn(page);
+        Page<Category> received = service.findByParameter("", 1, PageRequest.of(0, 10));
+        assertThat(page).isEqualTo(received);
     }
 
     @Test

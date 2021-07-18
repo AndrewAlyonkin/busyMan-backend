@@ -1,8 +1,5 @@
 package edu.alenkin.busyman.rest.v1.search;
 
-import edu.alenkin.busyman.model.Category;
-import edu.alenkin.busyman.model.Priority;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,11 +10,20 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class TaskSearch extends AbstractSearch {
     private String title;
     private Integer completed;
-    private Priority priority;
-    private Category category;
+    private Integer priorityId;
+    private Integer categoryId;
+
+    public TaskSearch(Integer pageNumber, Integer pageSize, String sortColumn,
+                      String sortDirection, String title, Integer completed,
+                      Integer priorityId, Integer categoryId) {
+        super(pageNumber, pageSize, sortColumn, sortDirection);
+        this.title = title;
+        this.completed = completed;
+        this.priorityId = priorityId;
+        this.categoryId = categoryId;
+    }
 }

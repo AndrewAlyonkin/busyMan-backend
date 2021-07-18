@@ -6,7 +6,6 @@ import edu.alenkin.busyman.security.SecurityUtils;
 import edu.alenkin.busyman.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -59,20 +58,22 @@ public class TaskRestController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<Page<Task>> find(@RequestBody TaskSearch search) {
+    public ResponseEntity<List<Task>> find(@RequestBody TaskSearch search) {
         int userId = SecurityUtils.getAuthUserId();
 
         log.debug("Search tasks with title={} with completed={} with priority={} with category={} for user {}",
-                search.getTitle(), search.getCompleted(), search.getPriority(), search.getCategory(), userId);
+                search.getTitle(), search.getCompleted(), search.getPriorityId(), search.getCategoryId(), userId);
 
         Sort sort = getSort(search);
         PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize(), sort);
 
+
         return ResponseEntity.ok(service.findByParameter(search.getTitle(),
                 search.getCompleted(),
-                search.getPriority().getId(),
-                search.getCategory().getId(),
-                userId, pageRequest));
+                search.getPriorityId(),
+                search.getCategoryId(),
+                userId, pageRequest)
+                .toList());
     }
 
     @PostMapping
@@ -86,7 +87,7 @@ public class TaskRestController {
     public ResponseEntity<Task> update(@RequestBody Task task) {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Updating task {} for user {}", task, userId);
-        return buildResponse(task, service.create(task, userId), HttpStatus.CREATED);
+        return buildResponse(task, service.update(task, userId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
