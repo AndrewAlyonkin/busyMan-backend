@@ -1,5 +1,4 @@
 language: java
-version: 16
 
 notifications:
   email:
