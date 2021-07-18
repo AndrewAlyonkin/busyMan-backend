@@ -1,4 +1,4 @@
-package edu.alenkin.busyman.rest.v1;
+package edu.alenkin.busyman.rest.v1.search;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +13,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PrioritySearch {
+public class CategorySearch extends AbstractSearch {
     private String title;
-
-    private Integer pageNumber;
-    private Integer pageSize;
-    private String sortColumn;
-    private String sortDirection;
 }

@@ -1,6 +1,7 @@
 package edu.alenkin.busyman.rest.v1;
 
 import edu.alenkin.busyman.model.Category;
+import edu.alenkin.busyman.rest.v1.search.CategorySearch;
 import edu.alenkin.busyman.security.SecurityUtils;
 import edu.alenkin.busyman.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static edu.alenkin.busyman.util.HttpUtils.buildResponse;
+import static edu.alenkin.busyman.util.HttpUtils.*;
 
 /**
  * @author Alenkin Andrew
@@ -40,12 +41,8 @@ public class CategoryRestController {
         int userId = SecurityUtils.getAuthUserId();
         log.debug("Search categories with title={} for user {}",search, userId);
 
-        String sortColumn = search.getSortColumn() == null ? "title" : search.getSortColumn();
-        Sort.Direction direction = search.getSortDirection().contains("desc")
-                ? Sort.Direction.DESC : Sort.Direction.ASC;
-
-        Sort sort = Sort.by(direction, sortColumn);
-        PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize());
+        Sort sort = getSort(search);
+        PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize(), sort);
 
         return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest));
     }

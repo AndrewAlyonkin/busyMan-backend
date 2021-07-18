@@ -1,10 +1,14 @@
 package edu.alenkin.busyman.rest.v1;
 
 import edu.alenkin.busyman.model.Task;
+import edu.alenkin.busyman.rest.v1.search.TaskSearch;
 import edu.alenkin.busyman.security.SecurityUtils;
 import edu.alenkin.busyman.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static edu.alenkin.busyman.util.HttpUtils.buildResponse;
+import static edu.alenkin.busyman.util.HttpUtils.getSort;
 
 /**
  * @author Alenkin Andrew
@@ -51,6 +56,23 @@ public class TaskRestController {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Get task {} for user {}", id, userId);
         return ResponseEntity.ok(service.get(id, userId));
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<Page<Task>> find(@RequestBody TaskSearch search) {
+        int userId = SecurityUtils.getAuthUserId();
+
+        log.debug("Search tasks with title={} with completed={} with priority={} with category={} for user {}",
+                search.getTitle(), search.getCompleted(), search.getPriority(), search.getCategory(), userId);
+
+        Sort sort = getSort(search);
+        PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize(), sort);
+
+        return ResponseEntity.ok(service.findByParameter(search.getTitle(),
+                search.getCompleted(),
+                search.getPriority().getId(),
+                search.getCategory().getId(),
+                userId, pageRequest));
     }
 
     @PostMapping

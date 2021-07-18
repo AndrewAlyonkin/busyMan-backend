@@ -67,18 +67,6 @@ class JpaCategoryServiceTest extends AbstractServiceTest {
         assertThat(1).isEqualTo(userIdCaptor.getValue());
     }
 
-//    @Test
-//    public void getByTitle() {
-//        ArgumentCaptor<String> searchCaptor = ArgumentCaptor.forClass(String.class);
-//        List<Category> all = List.of(family);
-//        Mockito.when(repository.findByTitle("с", 1)).thenReturn(all);
-//        List<Category> received = service.getByTitle("с", 1);
-//        assertThat(all).isEqualTo(received);
-//        Mockito.verify(repository).findByTitle(searchCaptor.capture(), userIdCaptor.capture());
-//        assertThat(1).isEqualTo(userIdCaptor.getValue());
-//        assertThat("с").isEqualTo(searchCaptor.getValue());
-//    }
-
     @Test
     public void delete() {
         Mockito.when(repository.delete(familyId, 1)).thenReturn(1);

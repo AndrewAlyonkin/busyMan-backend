@@ -1,5 +1,7 @@
 package edu.alenkin.busyman.util;
 
+import edu.alenkin.busyman.rest.v1.search.AbstractSearch;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -23,5 +25,12 @@ public class HttpUtils {
         return (entity!=null && condition)
                 ? new ResponseEntity<>(entity, status)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public static Sort getSort(AbstractSearch search) {
+        String sortColumn = search.getSortColumn() == null ? "title" : search.getSortColumn();
+        Sort.Direction direction = search.getSortDirection().contains("desc")
+                ? Sort.Direction.DESC : Sort.Direction.ASC;
+        return Sort.by(direction, sortColumn);
     }
 }
