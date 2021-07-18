@@ -21,4 +21,10 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     int delete(@Param("id") int id);
 
     User getByEmail(String email);
+
+    @Query("SELECT u.completedTotal FROM User u WHERE u.id=:id")
+    Integer getCompleted(@Param("id") int id);
+
+    @Query("SELECT u.uncompletedTotal FROM User u WHERE u.id=:id")
+    Integer getUncompleted(@Param("id") int id);
 }

@@ -4,6 +4,8 @@ import edu.alenkin.busyman.model.Priority;
 import edu.alenkin.busyman.repository.PriorityRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -53,5 +55,11 @@ public class JpaPriorityService implements PriorityService {
     public Priority update(Priority priority, Integer userId) {
         log.debug("Update priority {} ", priority);
         return checkNotFoundWithId(repository.save(priority, userId), userId);
+    }
+
+    @Override
+    public Page<Priority> findByParameter(String search, int userId, Pageable page) {
+        log.debug("Get priority with title {} ", search);
+        return repository.findByParameter(search, userId, page);
     }
 }

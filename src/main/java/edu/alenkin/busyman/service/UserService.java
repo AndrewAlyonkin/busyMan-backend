@@ -20,4 +20,8 @@ public interface UserService {
     User create(User user);
 
     User update(User user);
+
+    Integer getCompleted(Integer id);
+
+    Integer getUncompleted(Integer id);
 }

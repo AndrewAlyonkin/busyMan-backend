@@ -4,6 +4,8 @@ import edu.alenkin.busyman.model.Category;
 import edu.alenkin.busyman.repository.crudrepository.CrudCategoryRepository;
 import edu.alenkin.busyman.repository.crudrepository.CrudUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,5 +35,10 @@ public class JpaCategoryRepository implements CategoryRepository {
     public Category save(Category category, int userId) {
         category.setUser(userRepository.getById(userId));
         return jpaRepository.save(category);
+    }
+
+    @Override
+    public Page<Category> findByParameter(String search, int userId, Pageable page) {
+        return jpaRepository.findByParameter(search, userId, page);
     }
 }

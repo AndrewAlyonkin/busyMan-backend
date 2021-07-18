@@ -54,4 +54,14 @@ public class JpaUserService implements UserService {
         Assert.notNull(user, "user must not be null");
         return checkNotFoundWithId(repository.save(user), user.getId());
     }
+
+    @Override
+    public Integer getCompleted(Integer id) {
+        return repository.getCompleted(id);
+    }
+
+    @Override
+    public Integer getUncompleted(Integer id) {
+        return repository.getUncompleted(id);
+    }
 }

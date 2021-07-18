@@ -4,6 +4,8 @@ import edu.alenkin.busyman.model.Category;
 import edu.alenkin.busyman.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -53,5 +55,11 @@ public class JpaCategoryService implements CategoryService {
     public Category update(Category category, Integer userId) {
         log.debug("Update priority {} ", category);
         return checkNotFoundWithId(repository.save(category, userId), userId);
+    }
+
+    @Override
+    public Page<Category> findByParameter(String search, int userId, Pageable page) {
+        log.debug("Search categories {} for user id = {} ", search, userId);
+        return repository.findByParameter(search, userId, page);
     }
 }

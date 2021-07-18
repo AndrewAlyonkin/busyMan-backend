@@ -4,6 +4,8 @@ import edu.alenkin.busyman.model.Task;
 import edu.alenkin.busyman.repository.crudrepository.CrudTaskRepository;
 import edu.alenkin.busyman.repository.crudrepository.CrudUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,10 +16,9 @@ import java.util.List;
  */
 @Repository
 @AllArgsConstructor
-public class JpaTaskRepository implements TaskRepository{
+public class JpaTaskRepository implements TaskRepository {
     private final CrudTaskRepository jpaRepository;
     private final CrudUserRepository userRepository;
-
 
     public int delete(int id, int userId) {
         return jpaRepository.delete(id, userId);
@@ -44,5 +45,10 @@ public class JpaTaskRepository implements TaskRepository{
     @Override
     public List<Task> getWithCategory(int categoryId, int userId) {
         return jpaRepository.getWithCategory(categoryId, userId);
+    }
+
+    @Override
+    public Page<Task> findByParameter(String title, Integer completed, Integer priorityId, Integer categoryId, int userId, Pageable page) {
+        return jpaRepository.findByParameter(title, completed, priorityId, categoryId, userId, page);
     }
 }

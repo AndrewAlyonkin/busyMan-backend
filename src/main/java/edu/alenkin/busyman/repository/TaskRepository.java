@@ -1,6 +1,9 @@
 package edu.alenkin.busyman.repository;
 
+import edu.alenkin.busyman.model.Category;
 import edu.alenkin.busyman.model.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -20,4 +23,6 @@ public interface TaskRepository {
     List<Task> getWithPriority(int priorityId, int userId);
 
     List<Task> getWithCategory(int categoryId, int userId);
+
+    Page<Task> findByParameter(String title, Integer completed, Integer priorityId, Integer categoryId, int userId, Pageable page);
 }

@@ -80,4 +80,9 @@ class UserRepositoryTest extends AbstractRepositoryTest {
                 .isEqualTo(repository.findById(expected.getId()).orElse(null));
     }
 
+    @Test
+    public void getStatistic(){
+        assertThat(repository.getCompleted(1)).isEqualTo(2);
+        assertThat(repository.getUncompleted(1)).isEqualTo(2);
+    }
 }

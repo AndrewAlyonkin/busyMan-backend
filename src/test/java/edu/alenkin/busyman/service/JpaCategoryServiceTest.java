@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,18 @@ class JpaCategoryServiceTest extends AbstractServiceTest {
         Mockito.verify(repository).getAll(userIdCaptor.capture());
         assertThat(1).isEqualTo(userIdCaptor.getValue());
     }
+
+//    @Test
+//    public void getByTitle() {
+//        ArgumentCaptor<String> searchCaptor = ArgumentCaptor.forClass(String.class);
+//        List<Category> all = List.of(family);
+//        Mockito.when(repository.findByTitle("с", 1)).thenReturn(all);
+//        List<Category> received = service.getByTitle("с", 1);
+//        assertThat(all).isEqualTo(received);
+//        Mockito.verify(repository).findByTitle(searchCaptor.capture(), userIdCaptor.capture());
+//        assertThat(1).isEqualTo(userIdCaptor.getValue());
+//        assertThat("с").isEqualTo(searchCaptor.getValue());
+//    }
 
     @Test
     public void delete() {

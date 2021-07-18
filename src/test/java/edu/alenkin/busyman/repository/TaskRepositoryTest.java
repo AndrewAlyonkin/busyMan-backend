@@ -1,16 +1,15 @@
 package edu.alenkin.busyman.repository;
 
 import edu.alenkin.busyman.model.Task;
-import edu.alenkin.busyman.testData.TaskTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
 import static edu.alenkin.busyman.testData.TaskTestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Alenkin Andrew
@@ -48,7 +47,7 @@ class TaskRepositoryTest extends AbstractRepositoryTest {
                 .ignoringFieldsMatchingRegexes(".*user")
                 .ignoringFieldsMatchingRegexes(".*completedCount")
                 .ignoringActualNullFields()
-                .isEqualTo(repository.getAll( 2));
+                .isEqualTo(repository.getAll(2));
     }
 
     @Test
@@ -71,6 +70,66 @@ class TaskRepositoryTest extends AbstractRepositoryTest {
                 .ignoringFieldsMatchingRegexes(".*completedCount")
                 .ignoringActualNullFields()
                 .isEqualTo(repository.getWithCategory(4, 1));
+    }
+
+    @Test
+    public void findForEmptyReq() {
+        assertThat(List.of(taskOne14, taskOne13, taskOne12, taskOne11))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .ignoringCollectionOrder()
+                .isEqualTo(repository.findByParameter("", null, null, null, 1, PageRequest.of(0, 10)).toList());
+    }
+
+    @Test
+    public void findByTitle() {
+        assertThat(List.of(taskOne11))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .ignoringCollectionOrder()
+                .isEqualTo(repository.findByParameter("Купить", null, null, null, 1, PageRequest.of(0, 10)).toList());
+    }
+
+    @Test
+    public void findByCompleted() {
+        assertThat(List.of(taskOne11, taskOne12))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .ignoringCollectionOrder()
+                .isEqualTo(repository.findByParameter("", 1, null, null, 1, PageRequest.of(0, 10)).toList());
+    }
+
+    @Test
+    public void findByPriority() {
+        assertThat(List.of(taskOne11, taskOne13))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .ignoringCollectionOrder()
+                .isEqualTo(repository.findByParameter("", null, 7, null, 1, PageRequest.of(0, 10)).toList());
+    }
+
+    @Test
+    public void findByCategory() {
+        assertThat(List.of(taskOne13, taskOne14))
+                .usingRecursiveComparison()
+                .ignoringFields("date")
+                .ignoringFieldsMatchingRegexes(".*user")
+                .ignoringFieldsMatchingRegexes(".*completedCount")
+                .ignoringActualNullFields()
+                .ignoringCollectionOrder()
+                .isEqualTo(repository.findByParameter("", null, null, 4, 1, PageRequest.of(0, 10)).toList());
     }
 
     @Test

@@ -5,6 +5,9 @@ import edu.alenkin.busyman.security.SecurityUtils;
 import edu.alenkin.busyman.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,21 @@ public class CategoryRestController {
         Integer userId = SecurityUtils.getAuthUserId();
         log.debug("Get all categories for user {}", userId);
         return ResponseEntity.ok(service.getAll(userId));
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<Page<Category>> find(@RequestBody CategorySearch search) {
+        int userId = SecurityUtils.getAuthUserId();
+        log.debug("Search categories with title={} for user {}",search, userId);
+
+        String sortColumn = search.getSortColumn() == null ? "title" : search.getSortColumn();
+        Sort.Direction direction = search.getSortDirection().contains("desc")
+                ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Sort sort = Sort.by(direction, sortColumn);
+        PageRequest pageRequest = PageRequest.of(search.getPageNumber(), search.getPageSize());
+
+        return ResponseEntity.ok(service.findByParameter(search.getTitle(), userId, pageRequest));
     }
 
     @GetMapping("/{id}")

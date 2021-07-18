@@ -4,6 +4,8 @@ import edu.alenkin.busyman.model.Task;
 import edu.alenkin.busyman.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -47,13 +49,13 @@ public class JpaTaskService implements TaskService {
 
     @Override
     public void delete(Integer id, Integer userId) {
-        log.debug("Delete category with id {} for user id = {} ", id, userId);
+        log.debug("Delete task with id {} for user id = {} ", id, userId);
         checkNotFoundWithId(repository.delete(id, userId) != 0, (int) id);
     }
 
     @Override
     public Task create(Task task, Integer userId) {
-        log.debug("Create category {} ", task);
+        log.debug("Create task {} ", task);
         Assert.notNull(task, "category can not be empty");
         if (!task.isNew()) {
             return null;
@@ -63,7 +65,14 @@ public class JpaTaskService implements TaskService {
 
     @Override
     public Task update(Task task, Integer userId) {
-        log.debug("Update priority {} ", task);
+        log.debug("Update task {} ", task);
         return checkNotFoundWithId(repository.save(task, userId), userId);
+    }
+
+    @Override
+    public Page<Task> findByParameter(String title, Integer completed, Integer priorityId, Integer categoryId, int userId, Pageable page) {
+        log.debug("Search task with parameters title={} completed={} priority={} category={} for user= {} ",
+                title, completed, priorityId, categoryId, userId);
+        return repository.findByParameter(title, completed, priorityId, categoryId, userId, page);
     }
 }

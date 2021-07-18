@@ -1,6 +1,8 @@
 package edu.alenkin.busyman.service;
 
 import edu.alenkin.busyman.model.Priority;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -18,4 +20,6 @@ public interface PriorityService {
     Priority create(Priority priority, Integer userId);
 
     Priority update(Priority priority, Integer userId);
+
+    Page<Priority> findByParameter(String search, int userId, Pageable page);
 }

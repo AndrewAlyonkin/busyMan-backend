@@ -1,7 +1,9 @@
 package edu.alenkin.busyman.repository.crudrepository;
 
+import edu.alenkin.busyman.model.Category;
 import edu.alenkin.busyman.model.Priority;
-import edu.alenkin.busyman.model.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,10 @@ public interface CrudPriorityRepository extends JpaRepository<Priority, Integer>
 
     @Query("SELECT p FROM Priority p WHERE p.id=:id AND p.user.id=:userId")
     Priority get(@Param("id") int id, @Param("userId") int userId);
+
+    @Query("""
+            SELECT p FROM Priority p 
+            WHERE p.user.id=:userId AND (:search is null or :search =''
+            OR lower(p.title) LIKE  lower(concat('%' , :search, '%')))""")
+    Page<Priority> findByParameter(@Param("search") String search, @Param("userId") int id, Pageable page);
 }

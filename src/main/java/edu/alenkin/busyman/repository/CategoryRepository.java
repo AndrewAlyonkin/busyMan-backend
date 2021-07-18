@@ -1,6 +1,8 @@
 package edu.alenkin.busyman.repository;
 
 import edu.alenkin.busyman.model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ public interface CategoryRepository {
     Category get(int id, int userId);
 
     Category save(Category category, int userId);
+
+    Page<Category> findByParameter(String search, int userId, Pageable page);
 }

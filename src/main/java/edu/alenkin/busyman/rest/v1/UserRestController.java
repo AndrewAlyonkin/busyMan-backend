@@ -54,4 +54,16 @@ public class UserRestController {
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/completed/{id}")
+    public ResponseEntity<Integer> getCompleted(@PathVariable Integer id) {
+        log.debug("Get user {}", id);
+        return ResponseEntity.ok(service.getCompleted(id));
+    }
+
+    @GetMapping("/uncompleted/{id}")
+    public ResponseEntity<Integer> getUncompleted(@PathVariable Integer id) {
+        log.debug("Get user {}", id);
+        return ResponseEntity.ok(service.getUncompleted(id));
+    }
 }

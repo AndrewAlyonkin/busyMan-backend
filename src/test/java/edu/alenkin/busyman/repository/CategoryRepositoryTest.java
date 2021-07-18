@@ -5,6 +5,9 @@ import edu.alenkin.busyman.testData.CategoryTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -38,6 +41,18 @@ class CategoryRepositoryTest extends AbstractRepositoryTest {
                 .usingRecursiveComparison()
                 .ignoringFields("user")
                 .isEqualTo(repository.getAll(2));
+    }
+
+    @Test
+    public void findByParameter() {
+        assertThat(List.of(family))
+                .usingRecursiveComparison()
+                .ignoringFields("user")
+                .isEqualTo(repository.findByParameter("сем",1, PageRequest.of(0, 10)).toList());
+        assertThat(List.of(chill, travel))
+                .usingRecursiveComparison()
+                .ignoringFields("user")
+                .isEqualTo(repository.findByParameter("",2, PageRequest.of(0, 10)).toList());
     }
 
     @Test
